@@ -1,5 +1,6 @@
 import pandas as pd
 from personapi.models.models import Person
+from StringIO import StringIO
 
 
 def parse_date(str):
@@ -11,17 +12,25 @@ def parse_date(str):
     return pd.datetime.strptime(str, '%m-%d-%Y')
 
 
-def ingest_file(file_path, delimiter):
+def ingest_string(string, delimiter, header=True):
+    string_io = StringIO(string)
+    return ingest_file(string_io, delimiter=delimiter, header=header)
+
+
+def ingest_file(file_path, delimiter, header=True):
     """
     Ingest a single file to a dataframe assuming DateofBirth is the only datecolumn
     :param file_path: filepath
     :param delimiter: the delimiter that tells you how to read the file
     :return: dataframe
     """
-    return pd.read_csv(file_path, delimiter=delimiter, parse_dates=["DateOfBirth"], date_parser=parse_date)
+    return (
+        pd.read_csv(file_path, delimiter=delimiter, parse_dates=["DateOfBirth"], date_parser=parse_date) if header
+        else pd.read_csv(file_path, delimiter=delimiter, parse_dates=[4], date_parser=parse_date, header=None)
+    )
 
 
-def df_to_persons(df):
+def df_to_persons(df, header=True):
     """
     Dataframe -> [Person];
     note we only ingest the columns of the dataframe that are in the Person object
@@ -29,13 +38,16 @@ def df_to_persons(df):
     :param df: Pandas dataframe containing the ingested person files
     :return: [Person]
     """
-    person_attrs = Person._fields
     col_mapping = {
         col: index
         for index, col in enumerate(df.columns)
     }
+
+    # If we have a header, then we can ingest the data by the header name
+    # Otherwise assume that the data is in the correct order
+    attrs = [col_mapping[attr] for attr in Person._fields] if header else [index for index in range(len(df.columns))]
     persons = [
-        Person(*[row[col_mapping[attr]] for attr in person_attrs])
+        Person(*[row[attr] for attr in attrs])
         for i, row in df.iterrows()
     ]
 
