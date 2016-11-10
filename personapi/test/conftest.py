@@ -5,16 +5,16 @@ from personapi.db.data_repository import DataFetcher
 
 @pytest.fixture
 def filepipepath():
-    return "/home/grant/PycharmProjects/GuaranteedRate/personapi/test/testfiles/file-pipe.txt"
+    return "./testfiles/file-pipe.txt"
 
 
 @pytest.fixture
 def filecommapath():
-    return "/home/grant/PycharmProjects/GuaranteedRate/personapi/test/testfiles/file-comma.txt"
+    return "./testfiles/file-comma.txt"
 
 @pytest.fixture
 def filewhitespacepath():
-    return "/home/grant/PycharmProjects/GuaranteedRate/personapi/test/testfiles/file-whitespace.txt"
+    return "./testfiles/file-whitespace.txt"
 
 
 @pytest.fixture()
