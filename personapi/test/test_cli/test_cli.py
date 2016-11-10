@@ -48,6 +48,6 @@ def test_main_integration(capsys, filepipepath, filecommapath, filewhitespacepat
     main(mock_args)
     out, err = capsys.readouterr()
 
-    expected_out = "[Person(FirstName='Sally', LastName='Mae', Gender='F', FavoriteColor='Blue', DateOfBirth='06/01/1990'), Person(FirstName='Sally', LastName='Mae', Gender='F', FavoriteColor='Blue', DateOfBirth='06/01/1990'), Person(FirstName='Sally', LastName='Mae', Gender='F', FavoriteColor='Blue', DateOfBirth='06/01/1990'), Person(FirstName='Grant', LastName='Nicholas', Gender='M', FavoriteColor='Purple', DateOfBirth='07/06/1993'), Person(FirstName='Grant', LastName='Nicholas', Gender='M', FavoriteColor='Purple', DateOfBirth='07/06/1993'), Person(FirstName='Grant', LastName='Nicholas', Gender='M', FavoriteColor='Purple', DateOfBirth='07/06/1993')]"
+    expected_out = "[Person(LastName='Mae', FirstName='Sally', Gender='F', FavoriteColor='Blue', DateOfBirth='06/01/1990'), Person(LastName='Mae', FirstName='Sally', Gender='F', FavoriteColor='Blue', DateOfBirth='06/01/1990'), Person(LastName='Mae', FirstName='Sally', Gender='F', FavoriteColor='Blue', DateOfBirth='06/01/1990'), Person(LastName='Nicholas', FirstName='Grant', Gender='M', FavoriteColor='Purple', DateOfBirth='07/06/1993'), Person(LastName='Nicholas', FirstName='Grant', Gender='M', FavoriteColor='Purple', DateOfBirth='07/06/1993'), Person(LastName='Nicholas', FirstName='Grant', Gender='M', FavoriteColor='Purple', DateOfBirth='07/06/1993')]"
 
     assert out.strip() == expected_out.strip()
